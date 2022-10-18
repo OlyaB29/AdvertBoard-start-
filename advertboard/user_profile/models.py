@@ -1,8 +1,21 @@
+import os
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
+from django.utils import timezone
+
+
+def get_path_upload_image(file, username):
+    # Создание пути для сохранения аватара
+    time = timezone.now().strftime("%Y-%m-%d")
+    end_extention = file.split('.')[1]
+    head = file.split('.')[0]
+    if len(head) > 10:
+        head = head[:10]
+    file_name = username + head + '.' + end_extention
+    return os.path.join('{}', '{}').format(time, file_name)
 
 
 class Profile(models.Model):
@@ -18,8 +31,9 @@ class Profile(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
+        self.slug = "{}-{}".format(self.user.id, self.user.username)
+        self.avatar.name = get_path_upload_image(self.avatar.name, self.user.username)
         super().save(*args, **kwargs)
-        self.slug = "{}{}".format(self.user.id, self.name)
 
     #def get_absolute_url(self):
     #    return reverse("profile-detail", kwargs={"slug": self.user.username})
