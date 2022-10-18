@@ -5,6 +5,7 @@ from . models import Advert, Gallery, Photo, Value
 
 class PhotoSerializer(serializers.ModelSerializer):
     # Фотографии
+
     class Meta:
         model = Photo
         fields = ('image',)
@@ -12,6 +13,7 @@ class PhotoSerializer(serializers.ModelSerializer):
 
 class GallerySerializer(serializers.ModelSerializer):
     # Галереи фотографий
+
     photos = PhotoSerializer(many=True, read_only=True)
 
     class Meta:
@@ -21,6 +23,7 @@ class GallerySerializer(serializers.ModelSerializer):
 
 class ValueSerializer(serializers.ModelSerializer):
     # Значения характеристик
+
     characteristic = serializers.SlugRelatedField(slug_field='name', read_only=True)
 
     class Meta:
@@ -30,6 +33,7 @@ class ValueSerializer(serializers.ModelSerializer):
 
 class AdvertListSerializer(serializers.ModelSerializer):
     # Список объявлений
+
     main_photo = serializers.ImageField()
     category = serializers.StringRelatedField(read_only=True)
     region = serializers.SlugRelatedField(slug_field='title', read_only=True)
@@ -42,6 +46,7 @@ class AdvertListSerializer(serializers.ModelSerializer):
 
 class AdvertDetailSerializer(serializers.ModelSerializer):
     # Подробная информация об объявлении
+
     category = serializers.StringRelatedField(read_only=True)
     region = serializers.SlugRelatedField(slug_field='title', read_only=True)
     place = serializers.SlugRelatedField(slug_field='city', read_only=True)
@@ -55,6 +60,7 @@ class AdvertDetailSerializer(serializers.ModelSerializer):
 
 class AdvertCreateUpdateSerializer(serializers.ModelSerializer):
     # Добавление объявления
+
     gallery = serializers.StringRelatedField()
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:

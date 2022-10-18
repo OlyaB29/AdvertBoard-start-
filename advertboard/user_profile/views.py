@@ -19,7 +19,7 @@ class ProfileUpdateView(generics.RetrieveUpdateAPIView):
 
 
 class AvatarUpdateView(generics.UpdateAPIView):
-    # Редактирование аватара профилья пользователя
+    # Редактирование аватара профиля пользователя
     permission_classes = [permissions.IsAuthenticated]
     queryset = Profile.objects.all()
     serializer_class = AvatarUpdateSerializer

@@ -8,7 +8,7 @@ from django.utils import timezone
 
 
 def get_path_upload_image(file, username):
-    # Создание пути для сохранения аватара
+    # Создание пути для сохранения аватара пользователя
     time = timezone.now().strftime("%Y-%m-%d")
     end_extention = file.split('.')[1]
     head = file.split('.')[0]
